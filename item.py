@@ -1,12 +1,12 @@
 class Item:
-    weight = int()
-    value = int()
+    __weight = int()
+    __value = int()
     def __init__(self, weight: int, value: int):
-        self.weight = weight
-        self.value = value
+        self.__weight = weight
+        self.__value = value
 
     def get_weigth(self):
-        return self.weight
+        return self.__weight
     
     def get_value(self):
-        return self.value
+        return self.__value

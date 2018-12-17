@@ -42,12 +42,12 @@ class FileOper:
             self.__open_file()
         return int(self.__lines[5][0])
 
-    def get_weight(self):
+    def get_weight_list(self):
         if self.__flag:
             self.__open_file()
         return list(map(int, self.__lines[6]))
     
-    def get_value(self):
+    def get_value_list(self):
         if self.__flag:
             self.__open_file()
         return list(map(int, self.__lines[7]))

@@ -1,12 +1,11 @@
 from fileOper import FileOper
 
-path = "inputs/test1.txt"
+from evolutionaryOper import EvolutionaryOper
 
-input_file = FileOper(path)
+files = FileOper("inputs/test1.txt")
 
-print(input_file.get_bag_size())
+evolutionary = EvolutionaryOper(files)
 
-print(input_file.get_random_list())
-print(len(input_file.get_random_list()))
+evolutionary.initialise()
 
-print(type(input_file.get_random_list()[0]))
+print(evolutionary.get_population())
