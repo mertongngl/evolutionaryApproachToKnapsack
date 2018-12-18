@@ -7,5 +7,4 @@ files = FileOper("inputs/test1.txt")
 evolutionary = EvolutionaryOper(files)
 
 evolutionary.initialise()
-
-print(evolutionary.get_population())
+print(evolutionary.tournament_selection())
