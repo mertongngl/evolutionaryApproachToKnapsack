@@ -63,7 +63,7 @@ class EvolutionaryOper:
             new_population.append(chosen_ind[-1])
         return new_population
 
-    def recombine(self, parent1: tuple, parent2: tuple):
+    def __recombine(self, parent1: tuple, parent2: tuple):
         random_list = self.__files.get_random_list()
         random_list_len = len(random_list)
         parent1_gen = parent1[0]
@@ -73,3 +73,12 @@ class EvolutionaryOper:
         child2 = parent2_gen[0:index] + parent1_gen[index:]
         self.__i_random += 1
         return self.__evaluate((child1, 0)), self.__evaluate((child2, 0))
+
+    def to_recombine(self):
+        crossover_population = list()
+        for i in range(len(self.__population),2):
+            child1, child2 = self.__recombine(self.__population[i], self.__population[i+1])
+            crossover_population.extend([child1, child2])
+        return crossover_population
+            
+        
