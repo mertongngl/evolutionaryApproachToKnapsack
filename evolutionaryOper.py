@@ -5,9 +5,12 @@ from math import ceil
 class EvolutionaryOper:
     __files = object()
     __population = list()
-    __i_random = 0
+    __i_random = int()
+    __random_list_len = int()
     def __init__(self, files: FileOper):
         self.__files = files
+        self.__i_random = 0
+        self.__random_list_len = len(files.get_random_list())
 
     def __create_item(self):
         item_list = list()
@@ -17,12 +20,11 @@ class EvolutionaryOper:
 
     def initialise(self):
         random_list = self.__files.get_random_list()
-        random_list_len = len(random_list)
         item_list = self.__create_item()
         for i in range(self.__files.get_population_size()):
             gen = ''
             for j in range(len(item_list)):
-                if(random_list[self.__i_random % random_list_len] < 0.5):
+                if(random_list[self.__i_random % self.__random_list_len] < 0.5):
                     gen += '0'
                 else:
                     gen += '1'
@@ -45,18 +47,29 @@ class EvolutionaryOper:
         return (individual[0], sum_of_value)
         
     def __get_index(self, random_value: float):
-        return ceil(random_value * float(self.__files.get_population_size())) - 1
+        return ceil(random_value * float(self.__files.get_population_size()))
 
     def tournament_selection(self):
         chosen_ind = list()
         new_population = list()
         random_list = self.__files.get_random_list()
-        random_list_len = len(random_list)
+        self.__random_list_len = len(random_list)
         for i in range(self.__files.get_population_size()):
             chosen_ind = list()
             for j in range(self.__files.get_k()):
-                chosen_ind.append(self.__population[self.__get_index(random_list[self.__i_random % random_list_len])])
+                chosen_ind.append(self.__population[self.__get_index(random_list[self.__i_random % self.__random_list_len]) - 1])
                 self.__i_random += 1
             chosen_ind.sort(key=lambda tup: tup[1])
             new_population.append(chosen_ind[-1])
         return new_population
+
+    def recombine(self, parent1: tuple, parent2: tuple):
+        random_list = self.__files.get_random_list()
+        random_list_len = len(random_list)
+        parent1_gen = parent1[0]
+        parent2_gen = parent2[0]
+        index = self.__get_index(random_list[self.__i_random % random_list_len])
+        child1 = parent1_gen[0:index] + parent2_gen[index:] 
+        child2 = parent2_gen[0:index] + parent1_gen[index:]
+        self.__i_random += 1
+        return self.__evaluate((child1, 0)), self.__evaluate((child2, 0))
