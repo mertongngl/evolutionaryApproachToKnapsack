@@ -4,3 +4,4 @@ outputs/
 test.py
 .vscode/
 __pycache__/
+myOutputs/

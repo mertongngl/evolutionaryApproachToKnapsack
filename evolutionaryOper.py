@@ -77,7 +77,10 @@ class EvolutionaryOper:
     def to_recombine(self, population: list):
         crossover_population = list()
         for i in range(0,len(population),2):
-            child1, child2 = self.__recombine(population[i], population[i+1])
+            if((i + 1) < len(population)):
+                child1, child2 = self.__recombine(population[i], population[i+1])
+            else:
+                child1, child2 = self.__recombine(population[i], population[i])             
             crossover_population.extend([child1, child2])
         return crossover_population
 
