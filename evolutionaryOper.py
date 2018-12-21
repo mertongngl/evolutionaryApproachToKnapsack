@@ -49,7 +49,7 @@ class EvolutionaryOper:
     def __get_index(self, random_value: float):
         return ceil(random_value * float(self.__files.get_population_size()))
 
-    def tournament_selection(self):
+    def tournament_selection(self, population: list):
         chosen_ind = list()
         new_population = list()
         random_list = self.__files.get_random_list()
@@ -57,7 +57,7 @@ class EvolutionaryOper:
         for i in range(self.__files.get_population_size()):
             chosen_ind = list()
             for j in range(self.__files.get_k()):
-                chosen_ind.append(self.__population[self.__get_index(random_list[self.__i_random % self.__random_list_len]) - 1])
+                chosen_ind.append(population[self.__get_index(random_list[self.__i_random % self.__random_list_len]) - 1])
                 self.__i_random += 1
             chosen_ind.sort(key=lambda tup: tup[1])
             new_population.append(chosen_ind[-1])
@@ -105,3 +105,9 @@ class EvolutionaryOper:
 
         return self.__evaluate((new_gen, 0))
         
+    def survival_select(self, crossover_population: list, mutated_population: list):
+        survival_population = crossover_population
+        survival_population.extend(mutated_population)
+        survival_population.sort(key=lambda tup: tup[1])
+        survival_population.reverse()
+        return survival_population[:self.__files.get_population_size()]
