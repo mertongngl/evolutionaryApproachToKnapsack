@@ -7,6 +7,10 @@ files = FileOper("inputs/test1.txt")
 evolutionary = EvolutionaryOper(files)
 
 evolutionary.initialise()
-print(evolutionary.tournament_selection())
+eliminated_population = evolutionary.tournament_selection()
+crossover_population = evolutionary.to_recombine(eliminated_population)
 
-print(evolutionary.to_recombine())
+print(crossover_population)
+print("MUTATED POPULATION:")
+
+print(evolutionary.to_mutate(crossover_population))

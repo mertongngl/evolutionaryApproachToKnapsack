@@ -74,11 +74,34 @@ class EvolutionaryOper:
         self.__i_random += 1
         return self.__evaluate((child1, 0)), self.__evaluate((child2, 0))
 
-    def to_recombine(self):
+    def to_recombine(self, population: list):
         crossover_population = list()
-        for i in range(len(self.__population),2):
-            child1, child2 = self.__recombine(self.__population[i], self.__population[i+1])
+        for i in range(0,len(population),2):
+            child1, child2 = self.__recombine(population[i], population[i+1])
             crossover_population.extend([child1, child2])
         return crossover_population
-            
+
+    def to_mutate(self, population: list):
+        mutated_population = list()
+        for item in population:
+            mutated_population.append(self.__mutate(item))
+        return mutated_population
+
+    def __mutate(self, individual: tuple):
+        random_list = self.__files.get_random_list()
+        random_list_len = len(random_list)
+        mutation_chance = self.__files.get_mutaition_chance()
+        gen = individual[0]
+        new_gen = ""
+        for i in range(len(gen)):
+            if(random_list[self.__i_random % random_list_len] >= mutation_chance):
+                new_gen += gen[i]
+            else:
+                if(int(gen[i])):
+                    new_gen += '0'
+                else:
+                    new_gen += '1'
+            self.__i_random += 1
+
+        return self.__evaluate((new_gen, 0))
         
