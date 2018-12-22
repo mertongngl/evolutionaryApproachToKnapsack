@@ -26,7 +26,8 @@ for i in range(files.get_iteration()):
     survivors = evolutionary.survival_select(survivors,mutated_population)
     best_ones.append(survivors[0][1])
     worst_ones.append(survivors[-1][1])
-    avg.append((best_ones[i]+worst_ones[i])/2)
+    avg.append((sum([j for i,j in survivors])/float(len(survivors))))
+    
 
 
 gen = range(0,files.get_iteration())
