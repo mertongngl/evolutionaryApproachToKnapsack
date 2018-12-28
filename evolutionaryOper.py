@@ -18,6 +18,7 @@ class EvolutionaryOper:
             item_list.append(Item(self.__files.get_weight_list()[i], self.__files.get_value_list()[i]))
         return item_list
 
+
     def initialise(self):
         random_list = self.__files.get_random_list()
         item_list = self.__create_item()
@@ -65,10 +66,9 @@ class EvolutionaryOper:
 
     def __recombine(self, parent1: tuple, parent2: tuple):
         random_list = self.__files.get_random_list()
-        random_list_len = len(random_list)
         parent1_gen = parent1[0]
         parent2_gen = parent2[0]
-        index = self.__get_index(random_list[self.__i_random % random_list_len])
+        index = self.__get_index(random_list[self.__i_random % self.__random_list_len])
         child1 = parent1_gen[0:index] + parent2_gen[index:] 
         child2 = parent2_gen[0:index] + parent1_gen[index:]
         self.__i_random += 1
@@ -92,12 +92,11 @@ class EvolutionaryOper:
 
     def __mutate(self, individual: tuple):
         random_list = self.__files.get_random_list()
-        random_list_len = len(random_list)
         mutation_chance = self.__files.get_mutaition_chance()
         gen = individual[0]
         new_gen = ""
         for i in range(len(gen)):
-            if(random_list[self.__i_random % random_list_len] >= mutation_chance):
+            if(random_list[self.__i_random % self.__random_list_len] >= mutation_chance):
                 new_gen += gen[i]
             else:
                 if(int(gen[i])):

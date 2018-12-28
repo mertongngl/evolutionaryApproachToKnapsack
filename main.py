@@ -1,3 +1,4 @@
+import timeit
 from fileOper import FileOper
 
 from evolutionaryOper import EvolutionaryOper
@@ -8,7 +9,9 @@ mpl.use("agg")
 
 import matplotlib.pyplot as plt
 
-files = FileOper("inputs/test5.txt")
+start = timeit.default_timer()
+
+files = FileOper("inputs/test1.txt")
 
 evolutionary = EvolutionaryOper(files)
 
@@ -29,6 +32,8 @@ for i in range(files.get_iteration()):
     avg.append((sum([j for i,j in survivors])/float(len(survivors))))
     
 
+stop = timeit.default_timer()
+
 
 gen = range(0,files.get_iteration())
 plt.plot(gen,avg,label='Ortalama')
@@ -37,4 +42,8 @@ plt.plot(gen,best_ones,label='En büyük')
 plt.xlabel('Nesil')
 plt.ylabel('Fitness')
 plt.legend(loc='upper right')
-plt.savefig("./myOutputs/out5.png")
+plt.savefig("./myOutputs/out1.png")
+
+
+
+print("Time: " + str(stop - start))
